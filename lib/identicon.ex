@@ -7,6 +7,26 @@ defmodule Identicon do
     |> build_grid
     |> filter_odd_squares
     |> build_pixel_map
+    |> draw_image
+    |> save_image(input)
+  end
+
+  def save_image(image, input) do
+    File.write("#{input}.png", image)
+  end
+
+  # no longer reference image in destructuring as we no longer need access
+  def draw_image(%Identicon.Image{colour: colour, pixel_map: pixel_map}) do
+    image = :egd.create(250, 250)
+    fill = :egd.color(colour)
+
+    # modifying the existing image
+    Enum.each(pixel_map, fn {start, stop} ->
+      # returns a status code -> ok
+      :egd.filledRectangle(image, start, stop, fill)
+    end)
+
+    :egd.render(image)
   end
 
   def build_pixel_map(%Identicon.Image{grid: grid} = image) do

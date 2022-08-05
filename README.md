@@ -10,7 +10,7 @@ by adding `identicon` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:identicon, "~> 0.1.0"}
+    {:identicon, "~> 0.1.0"},
   ]
 end
 ```
